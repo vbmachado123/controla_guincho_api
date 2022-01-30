@@ -9,6 +9,7 @@ public class JourneyDto implements Serializable {
     private Date dateHourInit;
     private UserDto user;
     private Date dateHourEnd;
+    private VehicleDto vehicle;
 
     public JourneyDto() {
     }
@@ -18,6 +19,14 @@ public class JourneyDto implements Serializable {
         this.dateHourInit = dateHourInit;
         this.user = user;
         this.dateHourEnd = dateHourEnd;
+    }
+
+    public VehicleDto getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(VehicleDto vehicle) {
+        this.vehicle = vehicle;
     }
 
     public Long getId() {

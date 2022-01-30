@@ -16,9 +16,13 @@ public class AttendanceController {
     @Autowired
     AttendanceService service;
 
-    @GetMapping
-    public ResponseEntity teste() {
-        return ok("API Attendance Check");
-    }
+//    @GetMapping
+//    public ResponseEntity teste() {
+//        return ok("API Attendance Check");
+//    }
+
+
+
+
 
 }

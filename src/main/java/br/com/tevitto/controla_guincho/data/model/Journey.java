@@ -16,6 +16,17 @@ public class Journey {
     private User user;
     private Date dateHourInit;
     private Date dateHourEnd;
+    @OneToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 
     public Long getId() {
         return id;
