@@ -84,6 +84,54 @@ public class AttendanceDto implements Serializable {
         return receipt_type;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDateHour(Date dateHour) {
+        this.dateHour = dateHour;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public void setClient(ClientDto client) {
+        this.client = client;
+    }
+
+    public void setJourney(JourneyDto journey) {
+        this.journey = journey;
+    }
+
+    public void setOrigin(OriginDto origin) {
+        this.origin = origin;
+    }
+
+    public void setExit(ExitDto exit) {
+        this.exit = exit;
+    }
+
+    public void setDelivery(DeliveryDto delivery) {
+        this.delivery = delivery;
+    }
+
+    public void setWithdrawal(WithdrawalDto withdrawal) {
+        this.withdrawal = withdrawal;
+    }
+
+    public void setCommission(double commission) {
+        this.commission = commission;
+    }
+
+    public void setNumber_of_tolls(int number_of_tolls) {
+        this.number_of_tolls = number_of_tolls;
+    }
+
+    public void setReceipt_type(Receipt_TypeDto receipt_type) {
+        this.receipt_type = receipt_type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -11,9 +11,11 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
-    private String email;
-    private String password;
+    @OneToOne
+    private UserSystem userSystem;
+//    private String name;
+//    private String email;
+//    private String password;
     private String phone;
     private String path_img; //signature, nao sei como fica in english :/
 
@@ -23,30 +25,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPhone() {
@@ -65,16 +43,11 @@ public class User {
         this.path_img = path_img;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return Objects.equals(getId(), user.getId()) && Objects.equals(getName(), user.getName()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getPath_img(), user.getPath_img());
+    public UserSystem getUserSystem() {
+        return userSystem;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getEmail(), getPassword(), getPhone(), getPath_img());
+    public void setUserSystem(UserSystem userSystem) {
+        this.userSystem = userSystem;
     }
 }

@@ -5,38 +5,40 @@ import java.util.Objects;
 
 public class UserDto implements Serializable {
     private Long id;
-    private String name;
-    private String email;
-    private String password;
+    //    private String name;
+//    private String email;
+//    private String password;
     private String phone;
     private String path_img;
+    private UserSystemDto userSystemDto;
+
+
+    public UserSystemDto getUserSystemDto() {
+        return userSystemDto;
+    }
+
+    public void setUserSystemDto(UserSystemDto userSystemDto) {
+        this.userSystemDto = userSystemDto;
+    }
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String name, String email, String password, String phone, String path_img) {
+    public void setId(Long id) {
         this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    }
+
+
+    public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setPath_img(String path_img) {
         this.path_img = path_img;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getPhone() {
@@ -50,29 +52,13 @@ public class UserDto implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDto entity = (UserDto) o;
-        return Objects.equals(this.id, entity.id) &&
-                Objects.equals(this.name, entity.name) &&
-                Objects.equals(this.email, entity.email) &&
-                Objects.equals(this.password, entity.password) &&
-                Objects.equals(this.phone, entity.phone) &&
-                Objects.equals(this.path_img, entity.path_img);
+        if (!(o instanceof UserDto)) return false;
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(getId(), userDto.getId()) && Objects.equals(getPhone(), userDto.getPhone()) && Objects.equals(getPath_img(), userDto.getPath_img()) && Objects.equals(getUserSystemDto(), userDto.getUserSystemDto());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, password, phone, path_img);
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + "(" +
-                "id = " + id + ", " +
-                "name = " + name + ", " +
-                "email = " + email + ", " +
-                "password = " + password + ", " +
-                "phone = " + phone + ", " +
-                "path_img = " + path_img + ")";
+        return Objects.hash(getId(), getPhone(), getPath_img(), getUserSystemDto());
     }
 }

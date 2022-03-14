@@ -85,4 +85,31 @@ public class DeliveryDto implements Serializable {
                 "photo = " + photo + ")";
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setKm(double km) {
+        this.km = km;
+    }
+
+    public void setDateHour(Date dateHour) {
+        this.dateHour = dateHour;
+    }
+
+    public void setPhoto(PhotoDto photo) {
+        this.photo = photo;
+    }
 }

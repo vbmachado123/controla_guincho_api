@@ -15,9 +15,9 @@ public class Vehicle {
     private String brand; // marca
     private String license_plate;
     private String color;
-    @OneToOne
-    @JoinColumn(name = "journey_id")
-    private Journey journey;
+//    @OneToOne
+//    @JoinColumn(name = "journey_id")
+//    private Journey journey;
 
     public Long getId() {
         return id;
@@ -59,24 +59,16 @@ public class Vehicle {
         this.color = color;
     }
 
-    public Journey getJourney() {
-        return journey;
-    }
-
-    public void setJourney(Journey journey) {
-        this.journey = journey;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Vehicle)) return false;
         Vehicle vehicle = (Vehicle) o;
-        return Objects.equals(getId(), vehicle.getId()) && Objects.equals(getModel(), vehicle.getModel()) && Objects.equals(getBrand(), vehicle.getBrand()) && Objects.equals(getLicense_plate(), vehicle.getLicense_plate()) && Objects.equals(getColor(), vehicle.getColor()) && Objects.equals(getJourney(), vehicle.getJourney());
+        return Objects.equals(getId(), vehicle.getId()) && Objects.equals(getModel(), vehicle.getModel()) && Objects.equals(getBrand(), vehicle.getBrand()) && Objects.equals(getLicense_plate(), vehicle.getLicense_plate()) && Objects.equals(getColor(), vehicle.getColor());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getModel(), getBrand(), getLicense_plate(), getColor(), getJourney());
+        return Objects.hash(getId(), getModel(), getBrand(), getLicense_plate(), getColor());
     }
 }

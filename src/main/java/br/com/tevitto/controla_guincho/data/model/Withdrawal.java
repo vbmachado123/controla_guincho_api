@@ -12,7 +12,6 @@ public class Withdrawal {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
     private String address;
     private double latitude, longitude;
     private double km;

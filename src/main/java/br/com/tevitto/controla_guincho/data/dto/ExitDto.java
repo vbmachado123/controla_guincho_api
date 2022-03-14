@@ -5,13 +5,17 @@ import java.util.Date;
 import java.util.Objects;
 
 public class ExitDto implements Serializable {
-    private final Long id;
-    private final String address;
-    private final double latitude;
-    private final double longitude;
-    private final double km;
-    private final Date dateHour;
-    private final PhotoDto photo;
+
+    private Long id;
+    private String address;
+    private double latitude;
+    private double longitude;
+    private double km;
+    private Date dateHour;
+    private PhotoDto photo;
+
+    public ExitDto() {
+    }
 
     public ExitDto(Long id, String address, double latitude, double longitude, double km, Date dateHour, PhotoDto photo) {
         this.id = id;
@@ -80,5 +84,33 @@ public class ExitDto implements Serializable {
                 "km = " + km + ", " +
                 "dateHour = " + dateHour + ", " +
                 "photo = " + photo + ")";
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setKm(double km) {
+        this.km = km;
+    }
+
+    public void setDateHour(Date dateHour) {
+        this.dateHour = dateHour;
+    }
+
+    public void setPhoto(PhotoDto photo) {
+        this.photo = photo;
     }
 }

@@ -6,18 +6,25 @@ import java.util.Objects;
 @Entity
 @Table(name = "expense")
 public class Expense {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
     @OneToOne
     @JoinColumn(name = "expense_type_id")
     private Expense_Type expense_type;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
     private String description;
     private double value;
+
+    @OneToOne
+    @JoinColumn(name = "photo_id")
+    private Photo photo;
 
     public Long getId() {
         return id;
@@ -55,6 +62,14 @@ public class Expense {
         return value;
     }
 
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
     public void setValue(double value) {
         this.value = value;
     }
@@ -64,11 +79,11 @@ public class Expense {
         if (this == o) return true;
         if (!(o instanceof Expense)) return false;
         Expense expense = (Expense) o;
-        return Double.compare(expense.getValue(), getValue()) == 0 && Objects.equals(getId(), expense.getId()) && Objects.equals(getExpense_type(), expense.getExpense_type()) && Objects.equals(getUser(), expense.getUser()) && Objects.equals(getDescription(), expense.getDescription());
+        return Double.compare(expense.getValue(), getValue()) == 0 && Objects.equals(getId(), expense.getId()) && Objects.equals(getExpense_type(), expense.getExpense_type()) && Objects.equals(getUser(), expense.getUser()) && Objects.equals(getDescription(), expense.getDescription()) && Objects.equals(getPhoto(), expense.getPhoto());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getExpense_type(), getUser(), getDescription(), getValue());
+        return Objects.hash(getId(), getExpense_type(), getUser(), getDescription(), getValue(), getPhoto());
     }
 }
