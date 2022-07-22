@@ -26,7 +26,8 @@ public class VehicleService {
     private VehicleDto vehicleDto;
 
 
-    public VehicleDto create(VehicleDto dto) {
+    public VehicleDto
+    create(VehicleDto dto) {
 
         vehicle = new Vehicle();
 

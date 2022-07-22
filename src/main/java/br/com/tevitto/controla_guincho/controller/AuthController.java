@@ -2,7 +2,6 @@ package br.com.tevitto.controla_guincho.controller;
 
 import br.com.tevitto.controla_guincho.config.jwt.JwtTokenProvider;
 import br.com.tevitto.controla_guincho.config.security.AccountCredentialsVO;
-import br.com.tevitto.controla_guincho.repository.UserRepository;
 import br.com.tevitto.controla_guincho.repository.UserSystemRepository;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @Controller
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/v1/auth")
 public class AuthController {
 
     @Autowired
@@ -37,7 +36,7 @@ public class AuthController {
 
     @ApiOperation(value = "Autentica um Usuario e retorna um token")
     @SuppressWarnings("rawtypes")
-    @PostMapping(value = "/user/signin", produces = {"application/json"},
+    @PostMapping(value = "/user", produces = {"application/json"},
             consumes = {"application/json"})
     public ResponseEntity signin(@RequestBody AccountCredentialsVO data) {
         var username = data.getEmail();

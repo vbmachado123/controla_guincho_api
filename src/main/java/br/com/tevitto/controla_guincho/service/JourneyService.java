@@ -68,7 +68,6 @@ public class JourneyService {
         List<Journey> models = journeyRepository.findAll();
         for (Journey j : models) {
             JourneyDto dto = new JourneyDto();
-            dto = new JourneyDto();
             dto.setUser(userToDto(j.getUser()));
             dto.setDateHourInit(dto.getDateHourInit());
             journey.setDateHourEnd(dto.getDateHourEnd());
@@ -82,8 +81,8 @@ public class JourneyService {
     private UserDto userToDto(User user) {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
-        dto.setEmail(user.getEmail());
-        dto.setName(user.getName());
+//        dto.getUserSystemDto().setEmail(user.getUserSystem().getUserName());
+//        dto.getUserSystemDto().setNome(user.getUserSystem().getFullName());
         dto.setPhone(user.getPhone());
         dto.setPath_img(user.getPath_img());
         return dto;

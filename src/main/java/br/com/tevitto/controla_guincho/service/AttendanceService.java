@@ -67,17 +67,18 @@ public class AttendanceService {
 
     private Attendance convertAttendanceDto(AttendanceDto dto) {
         Attendance a = new Attendance();
+
         a.setCommission(dto.getCommission());
         a.setDateHour(dto.getDateHour());
         a.setNumber_of_tolls(dto.getNumber_of_tolls());
         a.setValue(dto.getValue());
-        a.setClient(convertClientDto(dto.getClient()));
         a.setDelivery(convertDeliveryDto(dto.getDelivery()));
         a.setExit(convertExitDto(dto.getExit()));
         a.setJourney(convertJourneyDto(dto.getJourney()));
         a.setOrigin(convertOriginDto(dto.getOrigin()));
         a.setReceipt_type(convertReceiptTypeDto(dto.getReceipt_type()));
         a.setWithdrawal(convertWithdrawalDto(dto.getWithdrawal()));
+        a.setClient(convertClientDto(dto.getClient()));
 
         return a;
     }
@@ -99,8 +100,10 @@ public class AttendanceService {
     private Photo convertPhotoDto(PhotoDto dto) {
 
         photo = new Photo();
-
+//        LocalDate date = LocalDate.parse(dto.getDateHour());
+//            Date dateTime = date;
         photo.setDateHour(dto.getDateHour());
+
         photo.setLatitude(dto.getLatitude());
         photo.setLongitude(dto.getLongitude());
         photo.setDescription(dto.getDescription());
@@ -131,9 +134,11 @@ public class AttendanceService {
     }
 
     private Journey convertJourneyDto(JourneyDto dto) {
+        System.out.println("Jornada Inicio: " + dto.getDateHourInit());
+        System.out.println("Jornada Fim: " + dto.getDateHourEnd());
         journey = new Journey();
 
-        Optional<Journey> optional = journeyRepository.findById(dto.getId());
+        Optional<Journey> optional = journeyRepository.findById(dto.getId() | 1);
 
         if (optional.isPresent())
             return optional.get();
@@ -163,7 +168,6 @@ public class AttendanceService {
         delivery.setPhoto(convertPhotoDto(dto.getPhoto()));
 
         return deliveryRepository.save(delivery);
-
     }
 
     private Client convertClientDto(ClientDto dto) {
@@ -233,6 +237,12 @@ public class AttendanceService {
         if (optional.isPresent()) {
             attendance = new Attendance();
             attendance = optional.get();
+            System.out.println("=============================================================================");
+            System.out.println("> Jornada ID: " + attendance.getJourney().getId());
+            System.out.println("> Saida ID: " + attendance.getExit().getId());
+            System.out.println("> Cliente ID: " + attendance.getClient().getId());
+            System.out.println("> Retirada ID: " + attendance.getWithdrawal().getId());
+            System.out.println("> Entrega ID: " + attendance.getDelivery().getId());
             AttendanceDto dto = convertAttendance(attendance);
 
             return dto;
@@ -280,12 +290,15 @@ public class AttendanceService {
 
         PhotoDto photo = new PhotoDto();
 
+        String preffix = "data:image/png;base64," + model.getPath();
         photo.setId(model.getId());
+
+//            Date dateTime = date;
         photo.setDateHour(model.getDateHour());
         photo.setLatitude(model.getLatitude());
         photo.setLongitude(model.getLongitude());
         photo.setDescription(model.getDescription());
-        photo.setPath(model.getPath()); // A principio em base64
+        photo.setPath(preffix.getBytes()); // A principio em base64
 
         return photo;
     }
@@ -354,5 +367,17 @@ public class AttendanceService {
         c.setId(model.getId());
 
         return c;
+    }
+
+    public List<AttendanceDto> find_all() {
+        List<Attendance> models = attendanceRepository.findAll();
+        List<AttendanceDto> dtos = new ArrayList<>();
+
+        for (Attendance a : models) {
+            AttendanceDto dto = convertAttendance(a);
+            dtos.add(dto);
+        }
+
+        return dtos;
     }
 }

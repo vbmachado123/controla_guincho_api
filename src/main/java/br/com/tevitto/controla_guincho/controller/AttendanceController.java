@@ -22,20 +22,25 @@ public class AttendanceController {
     @Autowired
     AttendanceService service;
 
-//    @GetMapping
-//    public ResponseEntity teste() {
-//        return ok("API Attendance Check");
-//    }
-
     @ApiOperation(value = "Create a Attendance for a User")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Return a created attendance", response = AttendanceDto.class),
             @ApiResponse(code = 500, message = "Return an error", response = AttendanceDto.class),
     })
     @PostMapping
-    public ResponseEntity create_attendance(AttendanceDto dto) {
+    public ResponseEntity create_attendance(@RequestBody AttendanceDto dto) {
 //        service.createAttendance(dto);
         return ok(service.create_attendance(dto));
+    }
+
+    @ApiOperation(value = "Find all Attendances")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Return an attendance", response = AttendanceDto.class),
+            @ApiResponse(code = 500, message = "Return an error", response = AttendanceDto.class),
+    })
+    @GetMapping("/find_all")
+    public ResponseEntity find_all() {
+        return ok(service.find_all());
     }
 
     @ApiOperation(value = "Find one Attendance")

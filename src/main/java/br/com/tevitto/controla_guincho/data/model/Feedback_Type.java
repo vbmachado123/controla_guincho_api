@@ -1,19 +1,18 @@
-package br.com.tevitto.controla_guincho.data.dto;
+package br.com.tevitto.controla_guincho.data.model;
 
-import java.io.Serializable;
+
+import javax.persistence.*;
 import java.util.Objects;
 
-public class Expense_TypeDto implements Serializable {
+@Entity
+@Table(name = "feedback_type")
+public class Feedback_Type {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
+
     private String description;
-
-    public Expense_TypeDto() {
-    }
-
-    public Expense_TypeDto(Long id, String description) {
-        this.id = id;
-        this.description = description;
-    }
 
     public Long getId() {
         return id;
@@ -33,9 +32,10 @@ public class Expense_TypeDto implements Serializable {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
-        if (!(o instanceof Expense_TypeDto)) return false;
-        Expense_TypeDto that = (Expense_TypeDto) o;
+        if (!(o instanceof Expense_Type)) return false;
+        Expense_Type that = (Expense_Type) o;
         return Objects.equals(getId(), that.getId()) && Objects.equals(getDescription(), that.getDescription());
     }
 

@@ -53,8 +53,8 @@ public class AttendanceExporter {
         createCell(row, 15, "KM atual da Saida", style);
         createCell(row, 16, "Endereco da Retirada", style);
         createCell(row, 17, "KM atual da Retirada", style);
-        createCell(row, 18, "Endereco Entrega", style);
-        createCell(row, 19, "KM atual da Entrega", style);
+//        createCell(row, 18, "Endereco Entrega", style);
+//        createCell(row, 19, "KM atual da Entrega", style);
 
     }
 
@@ -68,7 +68,7 @@ public class AttendanceExporter {
         } else if (value instanceof Long) {
             cell.setCellValue(String.valueOf(value));
         } else {
-            cell.setCellValue((String) value);
+            cell.setCellValue(String.valueOf(value));
         }
         cell.setCellStyle(style);
     }
@@ -102,8 +102,8 @@ public class AttendanceExporter {
                 createCell(row, columnCount++, a.getClient().getModel(), style);
                 createCell(row, columnCount++, a.getClient().getBrand(), style);
                 createCell(row, columnCount++, a.getClient().getLicense_plate(), style);
-                createCell(row, columnCount++, a.getJourney().getId(), style);
-                createCell(row, columnCount++, a.getJourney().getUser().getId(), style);
+//                createCell(row, columnCount++, a.getJourney().getId(), style);
+//                createCell(row, columnCount++, a.getJourney().getUser().getId(), style);
                 createCell(row, columnCount++, a.getOrigin().getDescription(), style);
                 createCell(row, columnCount++, a.getExit().getAddress(), style);
                 createCell(row, columnCount++, a.getExit().getKm(), style);

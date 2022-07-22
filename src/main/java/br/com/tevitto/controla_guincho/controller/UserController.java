@@ -22,7 +22,7 @@ public class UserController {
     public ResponseEntity auth(@RequestBody UserDto dto) {
         try {
             UserDto response = service.auth(dto);
-            if (response.getName().isEmpty() || response.hashCode() <= 0)
+            if (response.getUserSystemDto().getNome().isEmpty() || response.hashCode() <= 0)
                 return ResponseEntity.badRequest().body("Usuário ou senha inválidos");
             else
                 return ok(response);

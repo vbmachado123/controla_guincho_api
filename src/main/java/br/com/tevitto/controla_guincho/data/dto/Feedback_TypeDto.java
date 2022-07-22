@@ -1,16 +1,15 @@
 package br.com.tevitto.controla_guincho.data.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Expense_TypeDto implements Serializable {
+public class Feedback_TypeDto {
     private Long id;
     private String description;
 
-    public Expense_TypeDto() {
+    public Feedback_TypeDto() {
     }
 
-    public Expense_TypeDto(Long id, String description) {
+    public Feedback_TypeDto(Long id, String description) {
         this.id = id;
         this.description = description;
     }

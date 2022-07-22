@@ -88,13 +88,18 @@ public class UserService {
         user = new User();
         try {
             if (!dto.getUserSystemDto().getEmail().isEmpty()) {
-                Optional<User> optional = userRepository.findByEmail(dto.getUserSystemDto().getEmail());
+                Optional<User> optional = userRepository.findByUserSystemUserName(dto.getUserSystemDto().getEmail());
+
+                System.out.println("> Usuário Existe: " + optional.get().getUserSystem().getUserName());
+
                 if (optional.isPresent()) {
 
                     user = optional.get();
-                    if (passwordDecoder(dto.getUserSystemDto().getSenha(), user.getUserSystem().getPassword()))
+                    if (passwordDecoder(dto.getUserSystemDto().getSenha(),
+                            user.getUserSystem().getPassword())) {
+
                         return dto;
-                    else throw new Exception("E-mail ou senha inválidos!");
+                    } else throw new Exception("E-mail ou senha inválidos!");
                 } else return null;
             } else throw new Exception("E-mail ou senha inválidos!");
 
@@ -119,6 +124,10 @@ public class UserService {
 
         userSystemService.createUser(dto.getUserSystemDto());
         user.setPath_img(dto.getPath_img());
+
+        User newUser = userRepository.save(user);
+        dto.setId(newUser.getId());
+
         return dto;
     }
 

@@ -1,6 +1,7 @@
 package br.com.tevitto.controla_guincho.data.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class Withdrawal {
     private String address;
     private double latitude, longitude;
     private double km;
-    private Date dateHour;
+    private LocalDate dateHour;
 
     @ManyToOne
     @JoinColumn(name = "photo_id")
@@ -53,11 +54,11 @@ public class Withdrawal {
         this.km = km;
     }
 
-    public Date getDateHour() {
+    public LocalDate getDateHour() {
         return dateHour;
     }
 
-    public void setDateHour(Date dateHour) {
+    public void setDateHour(LocalDate dateHour) {
         this.dateHour = dateHour;
     }
 

@@ -18,6 +18,9 @@ public class Client {
     private String license_plate;
     private String color;
 
+    public Client() {
+    }
+
     public String getName() {
         return name;
     }

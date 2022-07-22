@@ -1,6 +1,7 @@
 package br.com.tevitto.controla_guincho.data.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -14,8 +15,8 @@ public class Journey {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-    private Date dateHourInit;
-    private Date dateHourEnd;
+    private LocalDate dateHourInit;
+    private LocalDate dateHourEnd;
     @OneToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
@@ -44,19 +45,19 @@ public class Journey {
         this.user = user;
     }
 
-    public Date getDateHourInit() {
+    public LocalDate getDateHourInit() {
         return dateHourInit;
     }
 
-    public void setDateHourInit(Date dateHourInit) {
+    public void setDateHourInit(LocalDate dateHourInit) {
         this.dateHourInit = dateHourInit;
     }
 
-    public Date getDateHourEnd() {
+    public LocalDate getDateHourEnd() {
         return dateHourEnd;
     }
 
-    public void setDateHourEnd(Date dateHourEnd) {
+    public void setDateHourEnd(LocalDate dateHourEnd) {
         this.dateHourEnd = dateHourEnd;
     }
 

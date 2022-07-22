@@ -1,6 +1,7 @@
 package br.com.tevitto.controla_guincho.data.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,8 +13,11 @@ public class Photo {
     @Column(name = "id", nullable = false)
     private Long id;
     private double latitude, longitude;
-    private String path;
-    private Date dateHour;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] path;
+    private LocalDate dateHour;
     private String description;
 
     public Long getId() {
@@ -40,19 +44,19 @@ public class Photo {
         this.longitude = longitude;
     }
 
-    public String getPath() {
+    public byte[] getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(byte[] path) {
         this.path = path;
     }
 
-    public Date getDateHour() {
+    public LocalDate getDateHour() {
         return dateHour;
     }
 
-    public void setDateHour(Date dateHour) {
+    public void setDateHour(LocalDate dateHour) {
         this.dateHour = dateHour;
     }
 
