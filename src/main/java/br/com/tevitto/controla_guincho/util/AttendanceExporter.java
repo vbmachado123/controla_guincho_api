@@ -46,8 +46,8 @@ public class AttendanceExporter {
         createCell(row, 9, "Modelo do veiculo", style);
         createCell(row, 10, "Marca do veiculo", style);
         createCell(row, 11, "Placa do veiculo", style);
-        createCell(row, 12, "ID Jornada", style);
-        createCell(row, 13, "ID Responsavel pela Jornada", style);
+//        createCell(row, 12, "ID Jornada", style);
+//        createCell(row, 13, "ID Responsavel pela Jornada", style);
         createCell(row, 14, "Origem Atendimento", style);
         createCell(row, 15, "Endereco de Saida", style);
         createCell(row, 15, "KM atual da Saida", style);

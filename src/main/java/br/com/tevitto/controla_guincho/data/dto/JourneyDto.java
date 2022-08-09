@@ -2,20 +2,21 @@ package br.com.tevitto.controla_guincho.data.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
 public class JourneyDto implements Serializable {
     private Long id;
-    private LocalDate dateHourInit;
+    private String dateHourInit;
     private UserDto user;
-    private LocalDate dateHourEnd;
+    private String dateHourEnd;
     private VehicleDto vehicle;
 
     public JourneyDto() {
     }
 
-    public JourneyDto(Long id, LocalDate dateHourInit, UserDto user, LocalDate dateHourEnd) {
+    public JourneyDto(Long id, String dateHourInit, UserDto user, String dateHourEnd) {
         this.id = id;
         this.dateHourInit = dateHourInit;
         this.user = user;
@@ -34,11 +35,11 @@ public class JourneyDto implements Serializable {
         return id;
     }
 
-    public LocalDate getDateHourInit() {
+    public String getDateHourInit() {
         return dateHourInit;
     }
 
-    public LocalDate getDateHourEnd() {
+    public String getDateHourEnd() {
         return dateHourEnd;
     }
 
@@ -46,7 +47,7 @@ public class JourneyDto implements Serializable {
         this.id = id;
     }
 
-    public void setDateHourInit(LocalDate dateHourInit) {
+    public void setDateHourInit(String dateHourInit) {
         this.dateHourInit = dateHourInit;
     }
 
@@ -58,7 +59,7 @@ public class JourneyDto implements Serializable {
         this.user = user;
     }
 
-    public void setDateHourEnd(LocalDate dateHourEnd) {
+    public void setDateHourEnd(String dateHourEnd) {
         this.dateHourEnd = dateHourEnd;
     }
 

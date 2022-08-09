@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -90,7 +91,7 @@ public class ExpenseService {
         expense = new Expense();
         expense.setValue(dto.getValue());
         expense.setDescription(dto.getDescription());
-//        expense.setUser(userRepository.getById(dto.getUser().getId()));
+        expense.setUser(userRepository.getById(dto.getUser().getId()));
 
         expense.setExpense_type(expense_typeRepository
                 .findByDescription(dto.getExpense_type().getDescription()).get());
@@ -113,11 +114,10 @@ public class ExpenseService {
         try {
 //            String replaced = dto.getDateHour().toString().replace("'T'", "");
 //            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //            Date d = output.parse(String.valueOf(dto.getDateHour()));
 //            String formattedTime = output.format(d);
 //            LocalDate date = LocalDate.parse(dto.getDateHour());
-            photo.setDateHour(dto.getDateHour());
+            photo.setDateHour(LocalDateTime.now().toString());
 //            Date dateTime = date;
 //            photo.setDateHour(new Date());
         } catch (Exception e) {

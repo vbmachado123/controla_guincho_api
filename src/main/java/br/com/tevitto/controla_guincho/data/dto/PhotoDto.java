@@ -1,8 +1,7 @@
 package br.com.tevitto.controla_guincho.data.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class PhotoDto implements Serializable {
@@ -11,7 +10,7 @@ public class PhotoDto implements Serializable {
     private double longitude;
     private byte[] path;
 
-    private LocalDate dateHour;
+    private String dateHour;
     private String description;
 
     public PhotoDto() {
@@ -50,11 +49,11 @@ public class PhotoDto implements Serializable {
         this.path = path;
     }
 
-    public LocalDate getDateHour() {
+    public String getDateHour() {
         return dateHour;
     }
 
-    public void setDateHour(LocalDate dateHour) {
+    public void setDateHour(String dateHour) {
         this.dateHour = dateHour;
     }
 

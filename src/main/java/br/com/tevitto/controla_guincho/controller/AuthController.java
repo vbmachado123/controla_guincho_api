@@ -45,6 +45,7 @@ public class AuthController {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, pasword));
 
         var user = repository.findByUsername(username);
+        String name = user.getFullName();
 
         var token = "";
 
@@ -57,6 +58,8 @@ public class AuthController {
         Map<Object, Object> model = new HashMap<>();
         model.put("username", username);
         model.put("token", token);
+        model.put("user_id", user.getId());
+        model.put("user", name);
         return ok(model);
     }
 }
