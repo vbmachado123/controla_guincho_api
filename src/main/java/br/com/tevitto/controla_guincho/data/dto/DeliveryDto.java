@@ -10,13 +10,13 @@ public class DeliveryDto implements Serializable {
     private double latitude;
     private double longitude;
     private double km;
-    private Date dateHour;
+    private String dateHour;
     private PhotoDto photo;
 
     public DeliveryDto() {
     }
 
-    public DeliveryDto(Long id, String address, double latitude, double longitude, double km, Date dateHour, PhotoDto photo) {
+    public DeliveryDto(Long id, String address, double latitude, double longitude, double km, String dateHour, PhotoDto photo) {
         this.id = id;
         this.address = address;
         this.latitude = latitude;
@@ -46,7 +46,7 @@ public class DeliveryDto implements Serializable {
         return km;
     }
 
-    public Date getDateHour() {
+    public String getDateHour() {
         return dateHour;
     }
 
@@ -105,7 +105,7 @@ public class DeliveryDto implements Serializable {
         this.km = km;
     }
 
-    public void setDateHour(Date dateHour) {
+    public void setDateHour(String dateHour) {
         this.dateHour = dateHour;
     }
 

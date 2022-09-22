@@ -15,7 +15,7 @@ public class Delivery {
     private String address;
     private double latitude, longitude;
     private double km;
-    private Date dateHour;
+    private String dateHour;
 
     @ManyToOne
     @JoinColumn(name = "photo_id")
@@ -61,11 +61,11 @@ public class Delivery {
         this.km = km;
     }
 
-    public Date getDateHour() {
+    public String getDateHour() {
         return dateHour;
     }
 
-    public void setDateHour(Date dateHour) {
+    public void setDateHour(String dateHour) {
         this.dateHour = dateHour;
     }
 

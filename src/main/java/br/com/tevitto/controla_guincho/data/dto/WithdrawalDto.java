@@ -11,7 +11,7 @@ public class WithdrawalDto implements Serializable {
     private double latitude;
     private double longitude;
     private double km;
-    private LocalDate dateHour;
+    private String dateHour;
     private PhotoDto photo;
 
     public Long getId() {
@@ -54,11 +54,11 @@ public class WithdrawalDto implements Serializable {
         this.km = km;
     }
 
-    public LocalDate getDateHour() {
+    public String getDateHour() {
         return dateHour;
     }
 
-    public void setDateHour(LocalDate dateHour) {
+    public void setDateHour(String dateHour) {
         this.dateHour = dateHour;
     }
 

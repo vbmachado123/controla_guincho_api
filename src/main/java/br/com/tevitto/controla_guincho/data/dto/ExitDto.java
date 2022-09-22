@@ -12,13 +12,13 @@ public class ExitDto implements Serializable {
     private double latitude;
     private double longitude;
     private double km;
-    private LocalDate dateHour;
+    private String dateHour;
     private PhotoDto photo;
 
     public ExitDto() {
     }
 
-    public ExitDto(Long id, String address, double latitude, double longitude, double km, LocalDate dateHour, PhotoDto photo) {
+    public ExitDto(Long id, String address, double latitude, double longitude, double km, String dateHour, PhotoDto photo) {
         this.id = id;
         this.address = address;
         this.latitude = latitude;
@@ -48,7 +48,7 @@ public class ExitDto implements Serializable {
         return km;
     }
 
-    public LocalDate getDateHour() {
+    public String getDateHour() {
         return dateHour;
     }
 
@@ -107,7 +107,7 @@ public class ExitDto implements Serializable {
         this.km = km;
     }
 
-    public void setDateHour(LocalDate dateHour) {
+    public void setDateHour(String dateHour) {
         this.dateHour = dateHour;
     }
 

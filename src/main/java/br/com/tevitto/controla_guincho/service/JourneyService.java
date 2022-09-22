@@ -92,6 +92,7 @@ public class JourneyService {
 
         journey = new Journey();
         journey = journeyRepository.getById(id);
+        journey.setVehicle(vehicleRepository.getById(dto.getVehicle().getId()));
         journey.setDateHourEnd(dto.getDateHourEnd());
 
         journeyRepository.save(journey);
@@ -132,5 +133,17 @@ public class JourneyService {
         vehicle.setLicense_plate(model.getLicense_plate());
 
         return vehicle;
+    }
+
+    public boolean vehicle_journey(JourneyDto dto, Long id) {
+
+        journey = new Journey();
+        journey = journeyRepository.getById(id);
+        journey.setVehicle(vehicleRepository.getById(dto.getVehicle().getId()));
+//        journey.setDateHourEnd(dto.getDateHourEnd());
+
+        journeyRepository.save(journey);
+
+        return true;
     }
 }

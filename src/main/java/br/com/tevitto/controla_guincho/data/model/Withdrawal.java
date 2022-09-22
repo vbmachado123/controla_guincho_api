@@ -16,7 +16,7 @@ public class Withdrawal {
     private String address;
     private double latitude, longitude;
     private double km;
-    private LocalDate dateHour;
+    private String dateHour;
 
     @ManyToOne
     @JoinColumn(name = "photo_id")
@@ -54,11 +54,11 @@ public class Withdrawal {
         this.km = km;
     }
 
-    public LocalDate getDateHour() {
+    public String getDateHour() {
         return dateHour;
     }
 
-    public void setDateHour(LocalDate dateHour) {
+    public void setDateHour(String dateHour) {
         this.dateHour = dateHour;
     }
 

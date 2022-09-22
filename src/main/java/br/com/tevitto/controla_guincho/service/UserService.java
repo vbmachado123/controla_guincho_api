@@ -3,10 +3,7 @@ package br.com.tevitto.controla_guincho.service;
 import br.com.tevitto.controla_guincho.data.dto.ExpenseDto;
 import br.com.tevitto.controla_guincho.data.dto.Expense_TypeDto;
 import br.com.tevitto.controla_guincho.data.dto.UserDto;
-import br.com.tevitto.controla_guincho.data.model.Expense;
-import br.com.tevitto.controla_guincho.data.model.Expense_Type;
-import br.com.tevitto.controla_guincho.data.model.User;
-import br.com.tevitto.controla_guincho.data.model.Vehicle;
+import br.com.tevitto.controla_guincho.data.model.*;
 import br.com.tevitto.controla_guincho.repository.ExpenseRepository;
 import br.com.tevitto.controla_guincho.repository.Expense_TypeRepository;
 import br.com.tevitto.controla_guincho.repository.UserRepository;
@@ -122,10 +119,11 @@ public class UserService {
 //        user.setEmail(dto.getEmail());
 //        user.setPassword(passwordEncoder(dto.getPassword()));
 
-        userSystemService.createUser(dto.getUserSystemDto());
-        user.setPath_img(dto.getPath_img());
+        UserSystem userSalvo = userSystemService.createUser(dto.getUserSystemDto());
+        user.setUserSystem(userSalvo);
+        this.user.setPath_img(dto.getPath_img());
 
-        User newUser = userRepository.save(user);
+        User newUser = userRepository.save(this.user);
         dto.setId(newUser.getId());
 
         return dto;

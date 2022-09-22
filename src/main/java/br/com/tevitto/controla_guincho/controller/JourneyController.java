@@ -58,5 +58,20 @@ public class JourneyController {
         else
             return ResponseEntity.badRequest().body("Não foi possível atualizar a jornada");
     }
+
+    @ApiOperation(value = "Update a Journey - set vehicle")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Return a updated journey", response = JourneyDto.class),
+            @ApiResponse(code = 500, message = "Return an error", response = JourneyDto.class),
+    })
+    @PutMapping("/{id}/update_vehicle")
+    public ResponseEntity vehicle_journey(@RequestBody JourneyDto dto, @PathVariable Long id) {
+        boolean updated = service.vehicle_journey(dto, id);
+
+        if (updated)
+            return ok(dto);
+        else
+            return ResponseEntity.badRequest().body("Não foi possível atualizar a jornada");
+    }
 }
 

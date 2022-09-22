@@ -1,9 +1,6 @@
 package br.com.tevitto.controla_guincho.service;
 
-import br.com.tevitto.controla_guincho.data.dto.ExpenseDto;
-import br.com.tevitto.controla_guincho.data.dto.Expense_TypeDto;
-import br.com.tevitto.controla_guincho.data.dto.PhotoDto;
-import br.com.tevitto.controla_guincho.data.dto.UserDto;
+import br.com.tevitto.controla_guincho.data.dto.*;
 import br.com.tevitto.controla_guincho.data.model.Expense;
 import br.com.tevitto.controla_guincho.data.model.Expense_Type;
 import br.com.tevitto.controla_guincho.data.model.Photo;
@@ -54,7 +51,8 @@ public class ExpenseService {
             dto.setDescription(m.getDescription());
             dto.setPhoto(convertPhotoToDto(m.getPhoto()));
             dto.setExpense_type(new Expense_TypeDto(m.getExpense_type().getId(), m.getExpense_type().getDescription()));
-            dto.setUser(convertUserToDto(m.getUser()));
+            dto.setValue(m.getValue());
+            dto.setUser(convertUserToDto(userRepository.getById(m.getUser().getId())));
 
             dtos.add(dto);
         }
@@ -79,8 +77,12 @@ public class ExpenseService {
     private UserDto convertUserToDto(User model) {
         UserDto dto = new UserDto();
         dto.setId(model.getId());
-        dto.getUserSystemDto().setEmail(model.getUserSystem().getUserName());
-        dto.getUserSystemDto().setNome(model.getUserSystem().getFullName());
+//        System.out.println(model.getUserSystem().getUserName());
+        UserSystemDto systemDto = new UserSystemDto();
+        systemDto.setEmail(model.getUserSystem().getUserName());
+        systemDto.setNome(model.getUserSystem().getFullName());
+//        dto.getUserSystemDto().setEmail(model.getUserSystem().getUserName());
+//        dto.getUserSystemDto().setNome();
         dto.setPath_img(model.getPath_img());
 
         return dto;

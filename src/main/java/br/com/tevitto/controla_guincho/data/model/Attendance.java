@@ -11,7 +11,7 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private Date dateHour;
+    private String dateHour;
     private double value;
 
     @OneToOne
@@ -52,11 +52,11 @@ public class Attendance {
         this.id = id;
     }
 
-    public Date getDateHour() {
+    public String getDateHour() {
         return dateHour;
     }
 
-    public void setDateHour(Date dateHour) {
+    public void setDateHour(String dateHour) {
         this.dateHour = dateHour;
     }
 

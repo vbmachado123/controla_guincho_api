@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class AttendanceDto implements Serializable {
     private Long id;
-    private Date dateHour;
+    private String dateHour;
     private double value;
     private ClientDto client;
     private JourneyDto journey;
@@ -21,7 +21,7 @@ public class AttendanceDto implements Serializable {
     public AttendanceDto() {
     }
 
-    public AttendanceDto(Long id, Date dateHour, double value, ClientDto client, JourneyDto journey, OriginDto origin, ExitDto exit, DeliveryDto delivery, WithdrawalDto withdrawal, double commission, int number_of_tolls, Receipt_TypeDto receipt_type) {
+    public AttendanceDto(Long id, String dateHour, double value, ClientDto client, JourneyDto journey, OriginDto origin, ExitDto exit, DeliveryDto delivery, WithdrawalDto withdrawal, double commission, int number_of_tolls, Receipt_TypeDto receipt_type) {
         this.id = id;
         this.dateHour = dateHour;
         this.value = value;
@@ -40,7 +40,7 @@ public class AttendanceDto implements Serializable {
         return id;
     }
 
-    public Date getDateHour() {
+    public String getDateHour() {
         return dateHour;
     }
 
@@ -88,7 +88,7 @@ public class AttendanceDto implements Serializable {
         this.id = id;
     }
 
-    public void setDateHour(Date dateHour) {
+    public void setDateHour(String dateHour) {
         this.dateHour = dateHour;
     }
 

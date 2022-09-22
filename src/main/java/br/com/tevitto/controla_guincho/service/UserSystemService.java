@@ -26,8 +26,8 @@ public class UserSystemService implements UserDetailsService {
     private PermissionRepository permissionRepository;
     private Permission permission = new Permission();
 
-    public UserSystemDto createUser(UserSystemDto dto) {
-
+    public UserSystem createUser(UserSystemDto dto) {
+        userSystem = new UserSystem();
         // Definindo Permissões Para o Usuário
         List<Permission> permissions = new ArrayList<>();
         permissions.add(permissionRepository.getOne(1L));
@@ -46,7 +46,7 @@ public class UserSystemService implements UserDetailsService {
 
         dto.setId(idSalvo.getId());
 
-        return dto;
+        return idSalvo;
     }
 
     @Override
