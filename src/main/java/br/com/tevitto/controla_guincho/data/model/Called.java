@@ -15,6 +15,7 @@ public class Called {
     private String datehour;
 
     @OneToOne
+    @Column(name = "category")
     private Category category_id;
 
     private String description;
@@ -175,5 +176,13 @@ public class Called {
 
     public void setWaiting_time(double waiting_time) {
         this.waiting_time = waiting_time;
+    }
+
+    public List<VehicleCall> getTow_truck() {
+        return tow_truck;
+    }
+
+    public void setTow_truck(List<VehicleCall> tow_truck) {
+        this.tow_truck = tow_truck;
     }
 }
