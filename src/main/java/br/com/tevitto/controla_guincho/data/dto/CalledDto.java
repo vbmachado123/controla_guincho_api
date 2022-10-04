@@ -11,21 +11,16 @@ public class CalledDto {
 
     private String datehour;
 
-    @OneToOne
-    private Category category_id;
+    private List<CategoryDto> category;
 
     private String description;
 
-    @OneToMany
     private List<OriginCallDto> origin;
 
-    @OneToMany
     private List<CallTypeDto> type;
 
-    @OneToMany
     private List<DriverCallDto> driver;
 
-    @OneToMany
     private List<VehicleCallDto> tow_truck;
 
     private String dateHourInit;
@@ -62,12 +57,12 @@ public class CalledDto {
         this.datehour = datehour;
     }
 
-    public Category getCategory_id() {
-        return category_id;
+    public List<CategoryDto> getCategory_id() {
+        return category;
     }
 
-    public void setCategory_id(Category category_id) {
-        this.category_id = category_id;
+    public void setCategory_id(List<CategoryDto> category) {
+        this.category = category;
     }
 
     public String getDescription() {

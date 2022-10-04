@@ -16,7 +16,7 @@ public class CheckingAccountController {
     @Autowired
     CheckingAccountService service;
 
-    @GetMapping("find_all")
+    @GetMapping("/find_all")
     public ResponseEntity find_all() {
         return ok(service.findAll());
     }

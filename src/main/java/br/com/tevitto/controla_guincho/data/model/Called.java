@@ -14,9 +14,9 @@ public class Called {
 
     private String datehour;
 
-    @OneToOne
+    @OneToMany
     @Column(name = "category")
-    private Category category_id;
+    private List<Category> category_id;
 
     private String description;
 
@@ -27,6 +27,8 @@ public class Called {
     private List<CallType> type;
 
     @OneToMany
+    @JoinTable(name = "called_driver", joinColumns = { @JoinColumn (name = "id_user") },
+            inverseJoinColumns = { @JoinColumn (name = "id_permission")})
     private List<DriverCall> driver;
 
     @OneToMany
@@ -66,11 +68,11 @@ public class Called {
         this.datehour = datehour;
     }
 
-    public Category getCategory_id() {
+    public List<Category> getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(Category category_id) {
+    public void setCategory_id(List<Category> category_id) {
         this.category_id = category_id;
     }
 

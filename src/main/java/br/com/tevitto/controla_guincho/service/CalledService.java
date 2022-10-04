@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,41 +47,30 @@ public class CalledService {
         List<CalledDto> newDtos = new ArrayList<>();
 
         for (CalledDto dto : dtos) {
-
-            called = new Called();
-
-            called.setDatehour(dto.getDatehour());
-            called.setDescription(dto.getDescription());
-            called.setDateHourInit(dto.getDateHourInit());
-            called.setDateHourEnd(dto.getDateHourEnd());
-            called.setKmInit(dto.getKmInit());
-            called.setKmEnd(dto.getKmEnd());
-            called.setWaiting_time(dto.getWaiting_time());
-            called.setValue(dto.getValue());
-            called.setLicense_plate(dto.getLicense_plate());
-            called.setNumber_of_tolls(dto.getNumber_of_tolls());
-            called.setWaiting_time(dto.getWaiting_time());
-            called.setVehicle(dto.getVehicle());
-            called.setOrigin(convertOriginDto(dto.getOrigin()));
-            called.setDriver(convertDriverDto(dto.getDriver()));
-            called.setTow_truck(convertTowTruckDto(dto.getTow_truck()));
-            called.setCategory_id(convertCategoryDto(dto.getCategory_id()));
-            called.setType(convertTypeDto(dto.getType()));
-
-            Called save = calledRepository.save(called);
-            dto.setId(save.getId());
-            newDtos.add(dto);
+            newDtos.add(create_one(dto));
         }
 
         return newDtos;
     }
 
-    private Category convertCategoryDto(Category dto) {
-        category = new Category();
+    private List<Category> convertCategoryDto(List<CategoryDto> dto) {
+//        category = new Category();
 
-        category = categoryRepository.getById(dto.getId());
+        List<Category> categories = new ArrayList<>();
+        Optional<Category> optional = categoryRepository.findById(1L);
 
-        return category;
+        if (optional.isPresent()) categories.add(optional.get());
+//        for (CategoryDto d : dto) {
+////            category = new Category();
+//            System.out.println("Categoria" + d.getId());
+//            Optional<Category> optional = categoryRepository.findById(1L);
+//
+//            if (optional.isPresent()) categories.add(optional.get());
+//        }
+//        category = categoryRepository.getById(dto.get(0).getId());
+//        categories.add(category);
+
+        return categories;
     }
 
     private List<VehicleCall> convertTowTruckDto(List<VehicleCallDto> tow_truck) {
@@ -89,8 +79,9 @@ public class CalledService {
         for (VehicleCallDto dto : tow_truck) {
             vehicleCall = new VehicleCall();
 
-            Optional<VehicleCall> optional = vehicleCallRepository.findByDescription(dto.getDescription());
-            if (optional.isPresent()) vehicleCall = optional.get();
+            vehicleCall = vehicleCallRepository.getById(dto.getId());
+//            Optional<VehicleCall> optional = vehicleCallRepository.findByDescription(dto.getDescription());
+//            if (optional.isPresent()) vehicleCall = optional.get();
 
             vehicles.add(vehicleCall);
         }
@@ -98,15 +89,205 @@ public class CalledService {
         return vehicles;
     }
 
-    private List<DriverCall> convertDriverDto(List<DriverCallDto> driver) {
-        return null;
+    private List<DriverCall> convertDriverDto(List<DriverCallDto> dto) {
+
+        List<DriverCall> drivers = new ArrayList<>();
+
+        for (DriverCallDto dc : dto) {
+
+            DriverCall driver = new DriverCall();
+
+            driver = driverCallRepository.getById(dc.getId());
+//            Optional<DriverCall> optional = driverCallRepository.findByDescription(dc.getDescription());
+//
+//            if (optional.isPresent()) driver = optional.get();
+
+            drivers.add(driver);
+
+        }
+
+        return drivers;
     }
 
-    private List<OriginCall> convertOriginDto(List<OriginCallDto> origin) {
-        return null;
+    private List<OriginCall> convertOriginDto(List<OriginCallDto> dto) {
+
+        List<OriginCall> origins = new ArrayList<>();
+
+        for (OriginCallDto oc : dto) {
+
+            OriginCall origin = new OriginCall();
+
+            origin = originCallRepository.getById(oc.getId());
+//            Optional<OriginCall> optional = originCallRepository.findByDescription(oc.getDescription());
+//
+//            if (optional.isPresent()) origin = optional.get();
+
+            origins.add(origin);
+
+        }
+
+        return origins;
     }
 
-    private List<CallType> convertTypeDto(List<CallTypeDto> type) {
-        return null;
+    private List<CallType> convertTypeDto(List<CallTypeDto> dto) {
+        List<CallType> calltypes = new ArrayList<>();
+
+        for (CallTypeDto ct : dto) {
+
+            CallType call = new CallType();
+
+            call = callTypeRepository.getById(ct.getId());
+//            Optional<CallType> optional =
+//                    callTypeRepository.findByDescription(ct.getDescription());
+//
+//            if (optional.isPresent()) call = optional.get();
+
+            calltypes.add(call);
+        }
+
+        return calltypes;
+    }
+
+    public List<CalledDto> findAll() {
+
+        List<CalledDto> dtos = new ArrayList<>();
+
+        List<Called> models = calledRepository.findAll();
+        Collections.sort(models, Collections.reverseOrder());
+
+        for (Called model : models) {
+
+            CalledDto dto = new CalledDto();
+
+            dto.setId(model.getId());
+            dto.setDatehour(model.getDatehour());
+            dto.setDescription(model.getDescription());
+            dto.setValue(model.getValue());
+            dto.setNumber_of_tolls(model.getNumber_of_tolls());
+            dto.setDateHourInit(model.getDateHourInit());
+            dto.setDateHourEnd(model.getDateHourEnd());
+
+            List<CategoryDto> categoryDtos = new ArrayList<>();
+            CategoryDto cdto = new CategoryDto();
+
+            cdto.setId(model.getCategory_id().get(0).getId());
+            cdto.setDescription(model.getCategory_id().get(0).getDescription());
+            categoryDtos.add(cdto);
+
+            List<OriginCallDto> origins = new ArrayList<>();
+
+            OriginCallDto odto = new OriginCallDto();
+            odto.setDescription(
+                    model.getOrigin().get(0).getDescription());
+            origins.add(odto);
+
+            dto.setOrigin(origins);
+
+            dto.setCategory_id(categoryDtos);
+
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
+    public CallTypesDto findTypes() {
+
+        CallTypesDto callTypesDto = new CallTypesDto();
+
+        List<CallTypeDto> callTypesDtos = new ArrayList<>();
+        List<CallType> callTypeModel = callTypeRepository.findAll();
+
+        for (CallType ct : callTypeModel) {
+            CallTypeDto dto = new CallTypeDto();
+            dto.setId(ct.getId());
+            dto.setDescription(ct.getDescription());
+            callTypesDtos.add(dto);
+        }
+        callTypesDto.setCall_types(callTypesDtos);
+
+        List<Category> categoriesModel = categoryRepository.findAll();
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+
+        for (Category c : categoriesModel) {
+            CategoryDto dto = new CategoryDto();
+
+            dto.setId(c.getId());
+            dto.setDescription(c.getDescription());
+            categoryDtos.add(dto);
+        }
+
+        callTypesDto.setCategories(categoryDtos);
+
+        List<DriverCall> driverModels = driverCallRepository.findAll();
+        List<DriverCallDto> driverDtos = new ArrayList<>();
+
+        for (DriverCall dc : driverModels) {
+            DriverCallDto dto = new DriverCallDto();
+
+            dto.setId(dc.getId());
+            dto.setDescription(dc.getDescription());
+
+            driverDtos.add(dto);
+        }
+
+        callTypesDto.setDrivers(driverDtos);
+
+        List<OriginCallDto> originDtos = new ArrayList<>();
+        List<OriginCall> originModels = originCallRepository.findAll();
+
+        for (OriginCall oc : originModels) {
+            OriginCallDto dto = new OriginCallDto();
+
+            dto.setId(oc.getId());
+            dto.setDescription(oc.getDescription());
+
+            originDtos.add(dto);
+        }
+
+        callTypesDto.setOrigins(originDtos);
+
+        List<VehicleCallDto> vehicleCallDtos = new ArrayList<>();
+        List<VehicleCall> vehicleModels = vehicleCallRepository.findAll();
+
+        for (VehicleCall vc : vehicleModels) {
+            VehicleCallDto dto = new VehicleCallDto();
+
+            dto.setId(vc.getId());
+            dto.setDescription(vc.getDescription());
+
+            vehicleCallDtos.add(dto);
+        }
+
+        callTypesDto.setVehicles(vehicleCallDtos);
+
+        return callTypesDto;
+    }
+
+    public CalledDto create_one(CalledDto dto) {
+        called = new Called();
+
+        called.setDatehour(dto.getDatehour());
+        called.setDescription(dto.getDescription());
+        called.setDateHourInit(dto.getDateHourInit());
+        called.setDateHourEnd(dto.getDateHourEnd());
+        called.setKmInit(dto.getKmInit());
+        called.setKmEnd(dto.getKmEnd());
+        called.setWaiting_time(dto.getWaiting_time());
+        called.setValue(dto.getValue());
+        called.setLicense_plate(dto.getLicense_plate());
+        called.setNumber_of_tolls(dto.getNumber_of_tolls());
+        called.setWaiting_time(dto.getWaiting_time());
+        called.setVehicle(dto.getVehicle());
+        called.setOrigin(convertOriginDto(dto.getOrigin()));
+        called.setDriver(convertDriverDto(dto.getDriver()));
+        called.setTow_truck(convertTowTruckDto(dto.getTow_truck()));
+        called.setCategory_id(convertCategoryDto(dto.getCategory_id()));
+        called.setType(convertTypeDto(dto.getType()));
+
+        Called save = calledRepository.save(called);
+        dto.setId(save.getId());
+
+        return dto;
     }
 }
