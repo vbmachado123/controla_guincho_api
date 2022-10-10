@@ -11,17 +11,17 @@ public class CalledDto {
 
     private String datehour;
 
-    private List<CategoryDto> category;
+    private CategoryDto category;
 
     private String description;
 
-    private List<OriginCallDto> origin;
+    private OriginCallDto origin;
 
-    private List<CallTypeDto> type;
+    private CallTypeDto type;
 
-    private List<DriverCallDto> driver;
+    private DriverCallDto driver;
 
-    private List<VehicleCallDto> tow_truck;
+    private VehicleCallDto tow_truck;
 
     private String dateHourInit;
 
@@ -57,11 +57,11 @@ public class CalledDto {
         this.datehour = datehour;
     }
 
-    public List<CategoryDto> getCategory_id() {
+    public CategoryDto getCategory() {
         return category;
     }
 
-    public void setCategory_id(List<CategoryDto> category) {
+    public void setCategory(CategoryDto category) {
         this.category = category;
     }
 
@@ -73,35 +73,35 @@ public class CalledDto {
         this.description = description;
     }
 
-    public List<OriginCallDto> getOrigin() {
+    public OriginCallDto getOrigin() {
         return origin;
     }
 
-    public void setOrigin(List<OriginCallDto> origin) {
+    public void setOrigin(OriginCallDto origin) {
         this.origin = origin;
     }
 
-    public List<CallTypeDto> getType() {
+    public CallTypeDto getType() {
         return type;
     }
 
-    public void setType(List<CallTypeDto> type) {
+    public void setType(CallTypeDto type) {
         this.type = type;
     }
 
-    public List<DriverCallDto> getDriver() {
+    public DriverCallDto getDriver() {
         return driver;
     }
 
-    public void setDriver(List<DriverCallDto> driver) {
+    public void setDriver(DriverCallDto driver) {
         this.driver = driver;
     }
 
-    public List<VehicleCallDto> getTow_truck() {
+    public VehicleCallDto getTow_truck() {
         return tow_truck;
     }
 
-    public void setTow_truck(List<VehicleCallDto> tow_truck) {
+    public void setTow_truck(VehicleCallDto tow_truck) {
         this.tow_truck = tow_truck;
     }
 

@@ -14,43 +14,43 @@ public class Called {
 
     private String datehour;
 
-    @OneToMany
-    @Column(name = "category")
-    private List<Category> category_id;
+    @OneToOne
+    private Category category;
 
     private String description;
 
-    @OneToMany
-    private List<OriginCall> origin;
+    @OneToOne
+    private OriginCall origin;
 
-    @OneToMany
-    private List<CallType> type;
+    @OneToOne
+    private CallType type;
 
-    @OneToMany
-    @JoinTable(name = "called_driver", joinColumns = { @JoinColumn (name = "id_user") },
-            inverseJoinColumns = { @JoinColumn (name = "id_permission")})
-    private List<DriverCall> driver;
+    @OneToOne
+    private DriverCall driver;
 
-    @OneToMany
-    private List<VehicleCall> tow_truck;
+    @OneToOne
+    private VehicleCall tow_truck;
 
     private String dateHourInit;
 
     private String dateHourEnd;
 
-    private int kmInit;
+    private Integer kmInit;
 
-    private int kmEnd;
+    private Integer kmEnd;
 
-    private double value;
+    private Double value;
 
     private String vehicle;
 
     private String license_plate;
 
-    private int number_of_tolls;
+    private Integer number_of_tolls;
 
-    private double waiting_time;
+    private Double waiting_time;
+
+    public Called() {
+    }
 
     public Long getId() {
         return id;
@@ -68,12 +68,12 @@ public class Called {
         this.datehour = datehour;
     }
 
-    public List<Category> getCategory_id() {
-        return category_id;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategory_id(List<Category> category_id) {
-        this.category_id = category_id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getDescription() {
@@ -84,28 +84,36 @@ public class Called {
         this.description = description;
     }
 
-    public List<OriginCall> getOrigin() {
+    public OriginCall getOrigin() {
         return origin;
     }
 
-    public void setOrigin(List<OriginCall> origin) {
+    public void setOrigin(OriginCall origin) {
         this.origin = origin;
     }
 
-    public List<CallType> getType() {
+    public CallType getType() {
         return type;
     }
 
-    public void setType(List<CallType> type) {
+    public void setType(CallType type) {
         this.type = type;
     }
 
-    public List<DriverCall> getDriver() {
+    public DriverCall getDriver() {
         return driver;
     }
 
-    public void setDriver(List<DriverCall> driver) {
+    public void setDriver(DriverCall driver) {
         this.driver = driver;
+    }
+
+    public VehicleCall getTow_truck() {
+        return tow_truck;
+    }
+
+    public void setTow_truck(VehicleCall tow_truck) {
+        this.tow_truck = tow_truck;
     }
 
     public String getDateHourInit() {
@@ -178,13 +186,5 @@ public class Called {
 
     public void setWaiting_time(double waiting_time) {
         this.waiting_time = waiting_time;
-    }
-
-    public List<VehicleCall> getTow_truck() {
-        return tow_truck;
-    }
-
-    public void setTow_truck(List<VehicleCall> tow_truck) {
-        this.tow_truck = tow_truck;
     }
 }

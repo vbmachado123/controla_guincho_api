@@ -39,4 +39,9 @@ public class CalledController {
     public ResponseEntity find_types() {
         return ok(service.findTypes());
     }
+
+    @GetMapping("/find_one/{id}")
+    public ResponseEntity find_one(@PathVariable Long id) {
+        return ok(service.findOne(id));
+    }
 }
