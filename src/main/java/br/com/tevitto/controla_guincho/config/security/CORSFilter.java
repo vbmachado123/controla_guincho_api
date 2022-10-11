@@ -17,22 +17,22 @@ public class CORSFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        HttpServletRequest request =  (HttpServletRequest) req;
+
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
-        response.setHeader("Access-Control-Expose-Headers", "Location");
+        response.setHeader("Access-Control-Allow-Headers", "*");
 
-        if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+        if ("OPTIONS".equals(request.getMethod())) {
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
+            response.setHeader("Access-Control-Allow-Headers", "*");
+            response.setHeader("Access-Control-Max-Age", "3600");
+
             response.setStatus(HttpServletResponse.SC_OK);
-
-        } else {
-            chain.doFilter(req, res);
-        }
+        } else chain.doFilter(req, res);
     }
+
     @Override
     public void init(FilterConfig filterConfig) {}
 
