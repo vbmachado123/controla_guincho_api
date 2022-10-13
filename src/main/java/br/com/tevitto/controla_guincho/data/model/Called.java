@@ -1,5 +1,7 @@
 package br.com.tevitto.controla_guincho.data.model;
 
+import org.joda.time.DateTime;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class Called {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String datehour;
+    private DateTime datehour;
 
     @OneToOne
     private Category category;
@@ -60,11 +62,11 @@ public class Called {
         this.id = id;
     }
 
-    public String getDatehour() {
+    public DateTime getDatehour() {
         return datehour;
     }
 
-    public void setDatehour(String datehour) {
+    public void setDatehour(DateTime datehour) {
         this.datehour = datehour;
     }
 

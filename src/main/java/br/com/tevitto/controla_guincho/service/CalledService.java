@@ -3,6 +3,7 @@ package br.com.tevitto.controla_guincho.service;
 import br.com.tevitto.controla_guincho.data.dto.*;
 import br.com.tevitto.controla_guincho.data.model.*;
 import br.com.tevitto.controla_guincho.repository.*;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,8 @@ public class CalledService {
         List<Category> categories = new ArrayList<>();
         Optional<Category> optional = categoryRepository.findById(dto.getId());
 
+        System.out.println("Categoria Recebido: " + dto.getId());
+
         if (optional.isPresent()) categories.add(optional.get());
 //        for (CategoryDto d : dto) {
 ////            category = new Category();
@@ -77,6 +80,8 @@ public class CalledService {
         List<VehicleCall> vehicles = new ArrayList<>();
 
         vehicleCall = new VehicleCall();
+
+        System.out.println("Veiculo Recebido: " + tow_truck.getId());
 
         vehicleCall = vehicleCallRepository.getById(tow_truck.getId());
 //        for (VehicleCallDto dto : tow_truck) {
@@ -97,6 +102,9 @@ public class CalledService {
         List<DriverCall> drivers = new ArrayList<>();
 
         DriverCall driver = new DriverCall();
+
+
+        System.out.println("Motorista Recebido: " + dto.getId());
 
         driver = driverCallRepository.getById(dto.getId());
 //        for (DriverCallDto dc : dto) {
@@ -120,6 +128,7 @@ public class CalledService {
         List<OriginCall> origins = new ArrayList<>();
         OriginCall origin = new OriginCall();
 
+        System.out.println("Origem Recebida: " + dto.getId());
         origin = originCallRepository.getById(dto.getId());
 //        for (OriginCallDto oc : dto) {
 
@@ -136,11 +145,11 @@ public class CalledService {
     }
 
     private CallType convertTypeDto(CallTypeDto dto) {
-        List<CallType> calltypes = new ArrayList<>();
+//        List<CallType> calltypes = new ArrayList<>();
 
-        CallType call = new CallType();
+        CallType call = callTypeRepository.getById(dto.getId());
 
-        call = callTypeRepository.getById(dto.getId());
+        System.out.println("CallType Recebido: " + dto.getId());
 
 //        for (CallTypeDto ct : dto) {
 //
@@ -171,19 +180,19 @@ public class CalledService {
                 CalledDto dto = new CalledDto();
 
                 dto.setId(model.getId());
-                dto.setDatehour(model.getDatehour());
+                //dto.setDatehour(model.getDatehour().toString());
                 dto.setDescription(model.getDescription());
 
                 CallType type = model.getType();
                 CallTypeDto callTypeDto = new CallTypeDto();
-                callTypeDto.setDescription(type.getDescription());
+                callTypeDto.setDescription((type.getDescription().isEmpty() ? "" : type.getDescription()));
                 callTypeDto.setId(type.getId());
                 dto.setType(callTypeDto);
 
                 dto.setValue((model.getValue() <= 0) ? 0 : model.getValue());
 //            dto.setNumber_of_tolls(model.getNumber_of_tolls());
-//            dto.setDateHourInit(model.getDateHourInit());
-//            dto.setDateHourEnd(model.getDateHourEnd());
+            //    dto.setDateHourInit(model.getDateHourInit());
+            //    dto.setDateHourEnd(model.getDateHourEnd());
 
                 List<CategoryDto> categoryDtos = new ArrayList<>();
                 CategoryDto cdto = new CategoryDto();
@@ -299,7 +308,7 @@ public class CalledService {
         called = new Called();
 
         try {
-            called.setDatehour(dto.getDatehour());
+            called.setDatehour(new DateTime());
             called.setDescription(dto.getDescription());
             called.setDateHourInit(dto.getDateHourInit());
             called.setDateHourEnd(dto.getDateHourEnd());
@@ -330,13 +339,17 @@ public class CalledService {
     public CalledDto findOne(Long id) {
         CalledDto dto = new CalledDto();
         Optional<Called> optional = calledRepository.findById(id);
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             Called model = optional.get();
             try {
                 //CalledDto dto = new CalledDto();
 
                 dto.setId(model.getId());
-                dto.setDatehour(model.getDatehour());
+                dto.setDatehour(model.getDatehour().toString());
+//                dto.setDateHourEnd(model.getDateHourEnd());
+//                dto.setDateHourInit(model.getDateHourInit());
+                dto.setVehicle((model.getVehicle().isEmpty() ? "" : model.getVehicle()));
+                dto.setLicense_plate((model.getLicense_plate().isEmpty() ? "" : model.getLicense_plate()));
                 dto.setDescription(model.getDescription());
 
                 CallType type = model.getType();
