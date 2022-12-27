@@ -30,6 +30,11 @@ public class CalledController {
         return ok(service.create_one(dto));
     }
 
+    @GetMapping("/last_supply/{id_vehicle}")
+    public ResponseEntity getLastSupply(@PathVariable Long id_vehicle) {
+        return ok(service.getLastSupply(id_vehicle));
+    }
+
     @GetMapping("/find_all")
     public ResponseEntity find_all() {
         return ok(service.findAll());

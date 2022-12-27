@@ -191,8 +191,8 @@ public class CalledService {
 
                 dto.setValue((model.getValue() <= 0) ? 0 : model.getValue());
 //            dto.setNumber_of_tolls(model.getNumber_of_tolls());
-            //    dto.setDateHourInit(model.getDateHourInit());
-            //    dto.setDateHourEnd(model.getDateHourEnd());
+                //    dto.setDateHourInit(model.getDateHourInit());
+                //    dto.setDateHourEnd(model.getDateHourEnd());
 
                 List<CategoryDto> categoryDtos = new ArrayList<>();
                 CategoryDto cdto = new CategoryDto();
@@ -397,5 +397,24 @@ public class CalledService {
         }
 
         return dto;
+    }
+
+    public double getLastSupply(Long id_vehicle) {
+        List<CalledDto> dtos = findAll();
+
+        originCall = originCallRepository.getById(1L);
+        Optional<VehicleCall> optional = vehicleCallRepository.findById(id_vehicle);
+        if (optional.isPresent()) vehicleCall = optional.get();
+//        expense_typeRepository
+        double lastSupply = 0;
+        for (CalledDto dto : dtos) {
+            if (dto.getOrigin().getDescription() == originCall.getDescription()
+                    && dto.getTow_truck().getDescription() == vehicleCall.getDescription()) {
+                lastSupply = dto.getKmEnd();
+                break;
+            }
+        }
+
+        return lastSupply;
     }
 }
