@@ -7,10 +7,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CalledService {
@@ -189,6 +186,18 @@ public class CalledService {
                 callTypeDto.setId(type.getId());
                 dto.setType(callTypeDto);
 
+                try {
+                    dto.setKmInit(Math.max(model.getKmInit(), 0));
+                    dto.setKmEnd(Math.max(model.getKmEnd(), 0));
+
+                } catch (Exception e) {
+
+                }
+
+                VehicleCallDto tow_truck = new VehicleCallDto();
+                tow_truck.setId(model.getTow_truck().getId());
+                tow_truck.setDescription(model.getTow_truck().getDescription());
+                dto.setTow_truck(tow_truck);
                 dto.setValue((model.getValue() <= 0) ? 0 : model.getValue());
 //            dto.setNumber_of_tolls(model.getNumber_of_tolls());
                 //    dto.setDateHourInit(model.getDateHourInit());
@@ -308,7 +317,7 @@ public class CalledService {
         called = new Called();
 
         try {
-            called.setDatehour(new DateTime());
+            called.setDatehour(dto.getDatehour());
             called.setDescription(dto.getDescription());
             called.setDateHourInit(dto.getDateHourInit());
             called.setDateHourEnd(dto.getDateHourEnd());
@@ -345,7 +354,7 @@ public class CalledService {
                 //CalledDto dto = new CalledDto();
 
                 dto.setId(model.getId());
-                dto.setDatehour(model.getDatehour().toString());
+                dto.setDatehour(model.getDatehour());
 //                dto.setDateHourEnd(model.getDateHourEnd());
 //                dto.setDateHourInit(model.getDateHourInit());
                 dto.setVehicle((model.getVehicle().isEmpty() ? "" : model.getVehicle()));
@@ -389,14 +398,15 @@ public class CalledService {
                 dto.setOrigin(odto);
 
 //            dto.setCategory_id(categoryDtos);
-
                 //0dtos.add(dto);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return dto;
+
         }
 
-        return dto;
+        return new CalledDto();
     }
 
     public double getLastSupply(Long id_vehicle) {
@@ -408,13 +418,19 @@ public class CalledService {
 //        expense_typeRepository
         double lastSupply = 0;
         for (CalledDto dto : dtos) {
-            if (dto.getOrigin().getDescription() == originCall.getDescription()
-                    && dto.getTow_truck().getDescription() == vehicleCall.getDescription()) {
-                lastSupply = dto.getKmEnd();
-                break;
+//            System.out.println("> LastSupply 1: " + dto.getKmEnd());
+            if (Objects.equals(dto.getOrigin().getDescription(), originCall.getDescription())) {
+                System.out.println("> LastSupply 1: " + dto.getKmEnd());
+
+                if (Objects.equals(dto.getTow_truck().getId(), id_vehicle)) {
+                    return dto.getKmEnd();
+//                    break;/**/
+                }
+
             }
         }
 
         return lastSupply;
     }
+
 }

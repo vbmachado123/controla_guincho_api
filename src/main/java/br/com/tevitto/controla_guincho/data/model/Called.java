@@ -14,7 +14,7 @@ public class Called {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private DateTime datehour;
+    private String datehour;
 
     @OneToOne
     private Category category;
@@ -62,11 +62,11 @@ public class Called {
         this.id = id;
     }
 
-    public DateTime getDatehour() {
+    public String getDatehour() {
         return datehour;
     }
 
-    public void setDatehour(DateTime datehour) {
+    public void setDatehour(String datehour) {
         this.datehour = datehour;
     }
 
