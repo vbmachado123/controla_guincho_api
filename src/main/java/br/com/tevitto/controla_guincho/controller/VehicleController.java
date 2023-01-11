@@ -2,9 +2,10 @@ package br.com.tevitto.controla_guincho.controller;
 
 import br.com.tevitto.controla_guincho.data.dto.VehicleDto;
 import br.com.tevitto.controla_guincho.service.VehicleService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,25 +19,26 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/v1/vehicle")
+@Tag(name = "Vehicle", description = "Vehicle API")
 public class VehicleController {
 
     @Autowired
     private VehicleService service;
 
-    @ApiOperation(value = "Create a Vehicle")
+    @Operation(summary = "Create a Vehicle")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Return a created vehicle", response = VehicleDto.class),
-            @ApiResponse(code = 500, message = "Return an error", response = VehicleDto.class),
+            @ApiResponse(responseCode = "200", description = "Return a created vehicle"),
+            @ApiResponse(responseCode = "500", description = "Return an error"),
     })
     @PostMapping
     public ResponseEntity create(@RequestBody VehicleDto vehicleDto) {
         return ok(service.create(vehicleDto));
     }
 
-    @ApiOperation(value = "Find all vehicles")
+    @Operation(summary = "Find all vehicles")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Return a list of vehicles", response = VehicleDto.class),
-            @ApiResponse(code = 500, message = "Return an error", response = VehicleDto.class),
+            @ApiResponse(responseCode = "200", description = "Return a list of vehicles"),
+            @ApiResponse(responseCode = "500", description = "Return an error"),
     })
     @GetMapping("/findAll/{available}")
     public ResponseEntity findAll(@PathVariable(required = false) boolean available) {

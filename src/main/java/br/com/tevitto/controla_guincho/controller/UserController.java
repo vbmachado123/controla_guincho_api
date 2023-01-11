@@ -2,6 +2,9 @@ package br.com.tevitto.controla_guincho.controller;
 
 import br.com.tevitto.controla_guincho.data.dto.UserDto;
 import br.com.tevitto.controla_guincho.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,11 @@ public class UserController {
     @Autowired
     UserService service;
 
+    @Operation(summary = "authenticate user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "user authenticated"),
+            @ApiResponse(responseCode = "500", description = "return a error")
+    })
     @CrossOrigin
     @PostMapping("/auth")
     public ResponseEntity auth(@RequestBody UserDto dto) {
@@ -32,11 +40,21 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "create user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "user created"),
+            @ApiResponse(responseCode = "500", description = "return a error")
+    })
     @PostMapping("/create")
     public ResponseEntity create(@RequestBody UserDto dto) {
         return ok(service.create(dto));
     }
 
+    @Operation(summary = "find all users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "return all users"),
+            @ApiResponse(responseCode = "500", description = "return a error")
+    })
     @GetMapping("/find_all")
     public ResponseEntity find_all() {
 

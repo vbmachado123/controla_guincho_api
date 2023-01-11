@@ -2,6 +2,9 @@ package br.com.tevitto.controla_guincho.controller;
 
 import br.com.tevitto.controla_guincho.service.FileStorageService;
 import br.com.tevitto.controla_guincho.service.UploadFileResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,11 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Operation(summary = "Upload a file")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "File uploaded successfully"),
+            @ApiResponse(responseCode = "500", description = "File not uploaded")
+    })
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
@@ -38,6 +46,11 @@ public class FileController {
                 file.getContentType(), file.getSize());
     }
 
+    @Operation(summary = "Upload multiple files")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Files uploaded successfully"),
+            @ApiResponse(responseCode = "500", description = "Files not uploaded")
+    })
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.asList(files)
@@ -46,6 +59,11 @@ public class FileController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Download a file")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "File downloaded successfully"),
+            @ApiResponse(responseCode = "500", description = "File not downloaded")
+    })
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource

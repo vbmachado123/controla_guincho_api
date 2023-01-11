@@ -3,7 +3,8 @@ package br.com.tevitto.controla_guincho.controller;
 import br.com.tevitto.controla_guincho.config.jwt.JwtTokenProvider;
 import br.com.tevitto.controla_guincho.config.security.AccountCredentialsVO;
 import br.com.tevitto.controla_guincho.repository.UserSystemRepository;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @Controller
 @RestController
 @RequestMapping("api/v1/auth")
+@Tag(name = "Authentication", description = "Authentication Routes")
 public class AuthController {
 
     @Autowired
@@ -34,8 +36,7 @@ public class AuthController {
     @Autowired
     UserSystemRepository repository;
 
-    @ApiOperation(value = "Autentica um Usuario e retorna um token")
-    @SuppressWarnings("rawtypes")
+    @Operation(summary = "Authenticate a user and return a token")
     @PostMapping(value = "/user", produces = {"application/json"},
             consumes = {"application/json"})
     public ResponseEntity signin(@RequestBody AccountCredentialsVO data) {
