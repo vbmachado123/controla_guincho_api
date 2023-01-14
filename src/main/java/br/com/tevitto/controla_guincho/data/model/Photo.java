@@ -11,10 +11,8 @@ public class Photo {
     @Column(name = "id", nullable = false)
     private Long id;
     private double latitude, longitude;
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] path;
+
+    private String path;
     private String dateHour;
     private String description;
 
@@ -42,11 +40,11 @@ public class Photo {
         this.longitude = longitude;
     }
 
-    public byte[] getPath() {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(byte[] path) {
+    public void setPath(String path) {
         this.path = path;
     }
 

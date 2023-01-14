@@ -12,6 +12,8 @@ import br.com.tevitto.controla_guincho.repository.UserRepository;
 import br.com.tevitto.controla_guincho.util.ExpenseExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,6 +42,10 @@ public class ExpenseService {
 
     @Autowired
     private PhotoRepository photoRepository;
+
+    @Autowired
+    private FileStorageService fileStorageService;
+
     private Photo photo;
 
     public List<ExpenseDto> findAll() {
@@ -60,6 +66,20 @@ public class ExpenseService {
         return dtos;
     }
 
+    public String uploadPhoto(MultipartFile file, Long id) {
+        Expense expense = expenseRepository.getById(id);
+
+        String filename = StringUtils.cleanPath(String.format("%s_expense", expense.getId()));
+        String path = fileStorageService.storeFile(file, filename);
+
+        Photo photo = new Photo();
+        photo.setPath(path);
+
+        photoRepository.save(photo);
+
+        return path;
+    }
+
     private PhotoDto convertPhotoToDto(Photo model) {
 
         PhotoDto dto = new PhotoDto();
@@ -68,7 +88,7 @@ public class ExpenseService {
         dto.setDescription(model.getDescription());
         dto.setLatitude(model.getLatitude());
         dto.setLongitude(model.getLongitude());
-        dto.setPath(preffix.getBytes());
+        dto.setPath(model.getPath());
         dto.setDateHour(model.getDateHour());
 
         return dto;
@@ -112,7 +132,6 @@ public class ExpenseService {
         photo.setLongitude(dto.getLongitude());
         System.out.println("> Base64========================================================");
 //        Base64.getEncoder().encodeToString(dto.getPath());
-        System.out.println(Base64.getEncoder().encodeToString(dto.getPath()));
         try {
 //            String replaced = dto.getDateHour().toString().replace("'T'", "");
 //            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");

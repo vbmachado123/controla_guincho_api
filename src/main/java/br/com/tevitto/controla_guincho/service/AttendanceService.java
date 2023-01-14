@@ -2,19 +2,20 @@ package br.com.tevitto.controla_guincho.service;
 
 import br.com.tevitto.controla_guincho.data.dto.*;
 import br.com.tevitto.controla_guincho.data.model.*;
+import br.com.tevitto.controla_guincho.exception.FileStorageException;
 import br.com.tevitto.controla_guincho.repository.*;
 import br.com.tevitto.controla_guincho.util.AttendanceExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AttendanceService {
@@ -55,7 +56,9 @@ public class AttendanceService {
 
     @Autowired
     private Receipt_TypeRepository receipt_typeRepository;
-    private Receipt_Type receipt_type;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     public AttendanceDto create_attendance(AttendanceDto dto) {
         attendance = new Attendance();
@@ -63,6 +66,27 @@ public class AttendanceService {
         Attendance save = attendanceRepository.save(attendance);
         dto.setId(save.getId());
         return dto;
+    }
+
+    public String saveImage(MultipartFile file, Long id, String type) {
+        Attendance attendance = attendanceRepository.getById(id);
+
+        Photo photo;
+
+        if (Objects.equals(type, "withdrawal")) photo = attendance.getWithdrawal().getPhoto();
+        else if (Objects.equals(type, "delivery")) photo = attendance.getDelivery().getPhoto();
+        else if (Objects.equals(type, "exit")) photo = attendance.getExit().getPhoto();
+        else throw new FileStorageException("Type not found");
+
+        String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
+        String filename = StringUtils.cleanPath(String.format("%s_%s.%s", attendance.getId(), type, extension));
+
+        String path = fileStorageService.storeFile(file, filename);
+
+        photo.setPath(path);
+        photoRepository.save(photo);
+
+        return path;
     }
 
     private Attendance convertAttendanceDto(AttendanceDto dto) {
@@ -77,6 +101,7 @@ public class AttendanceService {
         a.setJourney(convertJourneyDto(dto.getJourney()));
         a.setOrigin(convertOriginDto(dto.getOrigin()));
         a.setReceipt_type(convertReceiptTypeDto(dto.getReceipt_type()));
+        a.setObs(dto.getObs());
         a.setWithdrawal(convertWithdrawalDto(dto.getWithdrawal()));
         a.setClient(convertClientDto(dto.getClient()));
 
@@ -115,7 +140,7 @@ public class AttendanceService {
     private Receipt_Type convertReceiptTypeDto(Receipt_TypeDto dto) {
 
         Optional<Receipt_Type> optional = receipt_typeRepository.findByDescription(dto.getDescription());
-        receipt_type = new Receipt_Type();
+        Receipt_Type receipt_type = new Receipt_Type();
         receipt_type.setDescription(dto.getDescription());
 
         if (optional.isPresent()) return optional.get();
@@ -289,8 +314,6 @@ public class AttendanceService {
     private PhotoDto convertPhoto(Photo model) {
 
         PhotoDto photo = new PhotoDto();
-
-        String preffix = "data:image/png;base64," + model.getPath();
         photo.setId(model.getId());
 
 //            Date dateTime = date;
@@ -298,7 +321,7 @@ public class AttendanceService {
         photo.setLatitude(model.getLatitude());
         photo.setLongitude(model.getLongitude());
         photo.setDescription(model.getDescription());
-        photo.setPath(preffix.getBytes()); // A principio em base64
+        photo.setPath(model.getPath());
 
         return photo;
     }

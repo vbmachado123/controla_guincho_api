@@ -8,7 +8,7 @@ public class PhotoDto implements Serializable {
     private Long id;
     private double latitude;
     private double longitude;
-    private byte[] path;
+    private String path;
 
     private String dateHour;
     private String description;
@@ -41,11 +41,11 @@ public class PhotoDto implements Serializable {
         this.longitude = longitude;
     }
 
-    public byte[] getPath() {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(byte[] path) {
+    public void setPath(String path) {
         this.path = path;
     }
 

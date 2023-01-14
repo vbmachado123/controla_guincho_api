@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,6 +51,20 @@ public class ExpenseController {
     @PostMapping
     public ResponseEntity create(@RequestBody ExpenseDto dto) {
         return ok(service.create(dto));
+    }
+
+    @Operation(summary = "update a image of expense")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "image updated", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "return an error", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
+            })
+    })
+    @PostMapping("/upload/{id}")
+    public ResponseEntity upload(@RequestParam("file") MultipartFile file, @PathVariable Long id) {
+        return ok(service.uploadPhoto(file, id));
     }
 
     @Operation(summary = "export all expenses to excel")

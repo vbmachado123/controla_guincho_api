@@ -2,6 +2,7 @@ package br.com.tevitto.controla_guincho.data.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -40,6 +41,9 @@ public class Attendance {
     private double commission;
 
     private int number_of_tolls;
+
+    private String obs;
+
     @OneToOne
     @JoinColumn(name = "receipt_type_id")
     private Receipt_Type receipt_type;
@@ -130,6 +134,14 @@ public class Attendance {
 
     public void setNumber_of_tolls(int number_of_tolls) {
         this.number_of_tolls = number_of_tolls;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 
     public Receipt_Type getReceipt_type() {

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -98,6 +99,20 @@ public class AttendanceController {
     @PutMapping("/update")
     public ResponseEntity update_attendance(@RequestBody AttendanceDto dto) {
         return ok(service.update_attendance(dto));
+    }
+
+    @Operation(summary = "upload a image")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Return a created attendance", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Return an error", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
+            }),
+    })
+    @PostMapping("/upload/{type}/{id}")
+    public ResponseEntity<?> upload(@PathVariable String type, @PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        return ok(service.saveImage(file, id, type));
     }
 
     @Operation(summary = "export a attendance in excel")

@@ -2,6 +2,7 @@ package br.com.tevitto.controla_guincho.data.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class AttendanceDto implements Serializable {
@@ -16,12 +17,15 @@ public class AttendanceDto implements Serializable {
     private WithdrawalDto withdrawal;
     private double commission;
     private int number_of_tolls;
+
+    private String obs;
+
     private Receipt_TypeDto receipt_type;
 
     public AttendanceDto() {
     }
 
-    public AttendanceDto(Long id, String dateHour, double value, ClientDto client, JourneyDto journey, OriginDto origin, ExitDto exit, DeliveryDto delivery, WithdrawalDto withdrawal, double commission, int number_of_tolls, Receipt_TypeDto receipt_type) {
+    public AttendanceDto(Long id, String dateHour, double value, ClientDto client, JourneyDto journey, OriginDto origin, ExitDto exit, DeliveryDto delivery, WithdrawalDto withdrawal, double commission, int number_of_tolls, String obs, Receipt_TypeDto receipt_type) {
         this.id = id;
         this.dateHour = dateHour;
         this.value = value;
@@ -33,6 +37,7 @@ public class AttendanceDto implements Serializable {
         this.withdrawal = withdrawal;
         this.commission = commission;
         this.number_of_tolls = number_of_tolls;
+        this.obs = obs;
         this.receipt_type = receipt_type;
     }
 
@@ -126,6 +131,14 @@ public class AttendanceDto implements Serializable {
 
     public void setNumber_of_tolls(int number_of_tolls) {
         this.number_of_tolls = number_of_tolls;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 
     public void setReceipt_type(Receipt_TypeDto receipt_type) {
