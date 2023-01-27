@@ -6,7 +6,9 @@ import br.com.tevitto.controla_guincho.exception.FileStorageException;
 import br.com.tevitto.controla_guincho.repository.*;
 import br.com.tevitto.controla_guincho.util.AttendanceExporter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import br.com.tevitto.controla_guincho.config.file.FileStorageProperties;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,8 +59,7 @@ public class AttendanceService {
     @Autowired
     private Receipt_TypeRepository receipt_typeRepository;
 
-    @Autowired
-    private FileStorageService fileStorageService;
+    private final FileStorageService fileStorageService = new FileStorageService(new FileStorageProperties("fotos"));
 
     public AttendanceDto create_attendance(AttendanceDto dto) {
         attendance = new Attendance();
@@ -73,20 +74,50 @@ public class AttendanceService {
 
         Photo photo;
 
-        if (Objects.equals(type, "withdrawal")) photo = attendance.getWithdrawal().getPhoto();
-        else if (Objects.equals(type, "delivery")) photo = attendance.getDelivery().getPhoto();
-        else if (Objects.equals(type, "exit")) photo = attendance.getExit().getPhoto();
+        if (Objects.equals(type, "withdrawal")) {
+            if (attendance.getWithdrawal().getPhoto() == null) {
+                photo = new Photo();
+
+                attendance.getWithdrawal().setPhoto(photo);
+            } else {
+                photo = attendance.getWithdrawal().getPhoto();
+            }
+        } else if (Objects.equals(type, "delivery")) {
+            if (attendance.getDelivery().getPhoto() == null) {
+                photo = new Photo();
+
+                attendance.getDelivery().setPhoto(photo);
+            } else {
+                photo = attendance.getDelivery().getPhoto();
+            }
+        } else if (Objects.equals(type, "exit")) {
+            if (attendance.getExit().getPhoto() == null) {
+                photo = new Photo();
+
+                attendance.getExit().setPhoto(photo);
+            } else {
+                photo = attendance.getExit().getPhoto();
+            }
+        }
         else throw new FileStorageException("Type not found");
 
         String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
         String filename = StringUtils.cleanPath(String.format("%s_%s.%s", attendance.getId(), type, extension));
 
         String path = fileStorageService.storeFile(file, filename);
+        System.out.println(path);
 
         photo.setPath(path);
+        String dateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
+        photo.setDateHour(dateTime);
+
         photoRepository.save(photo);
 
         return path;
+    }
+
+    public Resource downloadImage(String path) {
+        return fileStorageService.loadFileAsResource(path);
     }
 
     private Attendance convertAttendanceDto(AttendanceDto dto) {
@@ -312,6 +343,8 @@ public class AttendanceService {
     }
 
     private PhotoDto convertPhoto(Photo model) {
+
+        if (model == null) return null;
 
         PhotoDto photo = new PhotoDto();
         photo.setId(model.getId());
