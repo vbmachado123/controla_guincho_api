@@ -108,8 +108,6 @@ public class AttendanceService {
         System.out.println(path);
 
         photo.setPath(path);
-        String dateTime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
-        photo.setDateHour(dateTime);
 
         photoRepository.save(photo);
 
