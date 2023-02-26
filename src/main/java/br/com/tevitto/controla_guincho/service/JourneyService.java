@@ -2,6 +2,7 @@ package br.com.tevitto.controla_guincho.service;
 
 import br.com.tevitto.controla_guincho.data.dto.JourneyDto;
 import br.com.tevitto.controla_guincho.data.dto.UserDto;
+import br.com.tevitto.controla_guincho.data.dto.UserSystemDto;
 import br.com.tevitto.controla_guincho.data.dto.VehicleDto;
 import br.com.tevitto.controla_guincho.data.model.Journey;
 import br.com.tevitto.controla_guincho.data.model.User;
@@ -80,9 +81,11 @@ public class JourneyService {
 
     private UserDto userToDto(User user) {
         UserDto dto = new UserDto();
+        dto.setUserSystemDto(new UserSystemDto());
+
         dto.setId(user.getId());
-//        dto.getUserSystemDto().setEmail(user.getUserSystem().getUserName());
-//        dto.getUserSystemDto().setNome(user.getUserSystem().getFullName());
+        dto.getUserSystemDto().setEmail(user.getUserSystem().getUserName());
+        dto.getUserSystemDto().setNome(user.getUserSystem().getFullName());
         dto.setPhone(user.getPhone());
         dto.setPath_img(user.getPath_img());
         return dto;
